@@ -69,6 +69,10 @@ h1 {
   font-size: 48px;
   color: #0d6efd;
 }
+#word span {
+  font-size: 28px;
+  margin-right: 10px;
+  vertical-align: middle;
 
 #meaning {
   font-size: 36px;
@@ -91,5 +95,19 @@ button:hover {
 
 #score {
   margin-top: 20px;
+  font-weight: bold;
+}
+.der {
+  color: #2196F3;
+  font-weight: bold;
+}
+
+.die {
+  color: #E91E63;
+  font-weight: bold;
+}
+
+.das {
+  color: #4CAF50;
   font-weight: bold;
 }

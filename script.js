@@ -1,4 +1,6 @@
-import { auth } from "./firebase.js";
+console.log("script.js çalıştı");
+import { auth, db } from "./firebase.js";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,30 +8,32 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-const cards = [
-  {
-    word: "Haus",
-    meaning: "Ev",
-    sentence: "Das Haus ist groß.",
-    translation: "Ev büyüktür."
-  },
-  {
-    word: "Wasser",
-    meaning: "Su",
-    sentence: "Ich trinke Wasser.",
-    translation: "Ben su içiyorum."
-  },
-  {
-    word: "Buch",
-    meaning: "Kitap",
-    sentence: "Das Buch ist interessant.",
-    translation: "Kitap ilginçtir."
-  }
-];
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+let cards = [];
 let currentIndex = 0;
 let known = 0;
 let unknown = 0;
+
+async function loadCardsFromFirestore() {
+  cards = [];
+
+  const querySnapshot = await getDocs(collection(db, "words"));
+
+  querySnapshot.forEach((doc) => {
+    cards.push(doc.data());
+  });
+
+  if (cards.length === 0) {
+    document.getElementById("word").textContent = "Kelime bulunamadı";
+    return;
+  }
+
+  showCard();
+}
 
 window.register = function () {
   const email = document.getElementById("email").value;
@@ -66,7 +70,8 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById("authBox").style.display = "none";
     document.getElementById("appBox").style.display = "block";
     document.getElementById("userInfo").textContent = "Giriş yapan: " + user.email;
-    showCard();
+
+    loadCardsFromFirestore();
   } else {
     document.getElementById("authBox").style.display = "block";
     document.getElementById("appBox").style.display = "none";
@@ -74,10 +79,17 @@ onAuthStateChanged(auth, (user) => {
 });
 
 function showCard() {
-  document.getElementById("word").textContent = cards[currentIndex].word;
-  document.getElementById("meaning").textContent = cards[currentIndex].meaning;
-  document.getElementById("sentence").textContent = cards[currentIndex].sentence;
-  document.getElementById("translation").textContent = cards[currentIndex].translation;
+  const card = cards[currentIndex];
+  console.log(card);
+  console.log(card.artikel);
+  console.log(card.kelime);
+
+  document.getElementById("word").textContent =
+  card.artikel + " " + card.kelime;
+
+  document.getElementById("meaning").textContent = card.anlam;
+  document.getElementById("sentence").textContent = card.cumle;
+  document.getElementById("translation").textContent = card.ceviri;
 }
 
 window.flipCard = function () {
@@ -85,6 +97,8 @@ window.flipCard = function () {
 };
 
 window.nextCard = function () {
+  if (cards.length === 0) return;
+
   currentIndex++;
 
   if (currentIndex >= cards.length) {
@@ -111,4 +125,3 @@ function updateScore() {
   document.getElementById("score").textContent =
     "Bilinen: " + known + " | Bilinmeyen: " + unknown;
 }
-// TEST
