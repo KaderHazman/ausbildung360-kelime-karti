@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ausbildung360 Kelime Kartı</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>Ausbildung360</h1>
+  <p class="subtitle">Almanca Kelime Kartı</p>
+
+  <div class="card" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+
+      <div class="card-front">
+        <h2 id="word">Haus</h2>
+        <p>Kartı çevirmek için tıkla</p>
+      </div>
+
+      <div class="card-back">
+        <h3 id="meaning">Ev</h3>
+        <p id="sentence">Das Haus ist groß.</p>
+        <p id="translation">Ev büyüktür.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="markKnown()">Biliyorum</button>
+    <button onclick="markUnknown()">Bilmiyorum</button>
+    <button onclick="nextCard()">Sonraki Kart</button>
+  </div>
+
+  <p id="score">Bilinen: 0 | Bilinmeyen: 0</p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
