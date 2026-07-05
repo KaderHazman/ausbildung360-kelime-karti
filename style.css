@@ -5,11 +5,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
+/* Ana kutu */
 .container {
-  width: 400px;
+  width: 430px;
   background: white;
   padding: 30px;
   border-radius: 20px;
@@ -17,9 +18,19 @@ body {
   text-align: center;
 }
 
+/* Sayfa kutuları */
+.screen {
+  margin-top: 15px;
+}
+
 h1 {
   color: #0d6efd;
   font-size: 42px;
+  margin-bottom: 5px;
+}
+
+h2 {
+  color: #0d6efd;
 }
 
 .subtitle {
@@ -28,6 +39,85 @@ h1 {
   font-size: 20px;
 }
 
+/* Üst alan */
+.topbar {
+  background: #f5f7fa;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+#userInfo {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Giriş alanı */
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* Butonlar */
+button {
+  padding: 12px 18px;
+  margin: 6px;
+  border: none;
+  border-radius: 10px;
+  background: #0d6efd;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #084298;
+  transform: scale(1.05);
+}
+
+/* Seviye ve kategori butonları */
+.level-buttons,
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.level-buttons button,
+.category-buttons button {
+  min-width: 120px;
+}
+
+/* Çalışma paneli */
+#studyPanel {
+  background: #f5f7fa;
+  border: 2px solid #0d6efd;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+#studyInfo {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+#timer {
+  font-size: 30px;
+  font-weight: bold;
+  color: #e91e63;
+}
+
+/* Kart */
 .card {
   perspective: 1000px;
   cursor: pointer;
@@ -59,6 +149,8 @@ h1 {
   justify-content: center;
   align-items: center;
   background: white;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .card-back {
@@ -66,37 +158,30 @@ h1 {
 }
 
 #word {
-  font-size: 48px;
+  font-size: 38px;
   color: #0d6efd;
 }
-#word span {
-  font-size: 28px;
-  margin-right: 10px;
-  vertical-align: middle;
 
 #meaning {
-  font-size: 36px;
+  font-size: 34px;
+  color: #333;
 }
 
-button {
-  padding: 12px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
-  background: #0d6efd;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
+#sentence,
+#translation {
+  font-size: 18px;
+  color: #555;
 }
 
-button:hover {
-  background: #084298;
-}
-
-#score {
+/* Skor ve sonuç */
+#score,
+#resultText {
   margin-top: 20px;
   font-weight: bold;
+  line-height: 1.7;
 }
+
+/* Artikel renkleri */
 .der {
   color: #2196F3;
   font-weight: bold;
@@ -110,4 +195,33 @@ button:hover {
 .das {
   color: #4CAF50;
   font-weight: bold;
+}
+
+/* Mobil uyum */
+@media (max-width: 500px) {
+  body {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  #word {
+    font-size: 30px;
+  }
+
+  #meaning {
+    font-size: 28px;
+  }
+
+  button {
+    width: 90%;
+  }
 }

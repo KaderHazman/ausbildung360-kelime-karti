@@ -2,50 +2,135 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Ausbildung360 Kelime Kartı</title>
+  <title>Ausbildung360</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-  <h1>Ausbildung360</h1>
-  <p class="subtitle">Almanca Kelime Kartı</p>
 
-  <div id="authBox">
+  <h1>Ausbildung360</h1>
+  <p class="subtitle">🇩🇪 Almanca Kelime Kartı 🇹🇷</p>
+
+  <!-- Giriş / Kayıt -->
+  <div id="authBox" class="screen">
+    <h2>🔐 Giriş / Kayıt</h2>
+
     <input type="email" id="email" placeholder="E-posta">
     <input type="password" id="password" placeholder="Şifre">
+
     <button onclick="register()">Kayıt Ol</button>
     <button onclick="login()">Giriş Yap</button>
+
     <p id="authMessage"></p>
   </div>
 
+  <!-- Uygulama -->
   <div id="appBox" style="display:none;">
-    <p id="userInfo"></p>
-    <button onclick="logout()">Çıkış Yap</button>
 
-    <div class="card" onclick="flipCard()">
-      <div class="card-inner" id="cardInner">
-        <div class="card-front">
-          <h2 id="word">Haus</h2>
-          <p>Kartı çevirmek için tıkla</p>
-        </div>
+    <div class="topbar">
+      <p id="userInfo"></p>
+      <button onclick="logout()">Çıkış Yap</button>
+    </div>
 
-        <div class="card-back">
-          <h3 id="meaning">Ev</h3>
-          <p id="sentence">Das Haus ist groß.</p>
-          <p id="translation">Ev büyüktür.</p>
+    <!-- Ana Sayfa -->
+    <div id="homeBox" class="screen">
+      <h2>🏠 Ana Sayfa</h2>
+      <p>Çalışmaya başlamak için seviyeni seç.</p>
+
+      <button onclick="showLevelScreen()">📚 Seviye Seçimi</button>
+      <button onclick="showSettings()">⚙️ Ayarlar</button>
+    </div>
+
+    <!-- Seviye Seçimi -->
+    <div id="levelBox" class="screen" style="display:none;">
+      <h2>📚 Seviye Seçimi</h2>
+
+      <div class="level-buttons">
+        <button onclick="selectLevel('A1')">A1</button>
+        <button onclick="selectLevel('A2')">A2</button>
+        <button onclick="selectLevel('B1')">B1</button>
+      </div>
+
+      <button onclick="goHome()">🏠 Ana Sayfa</button>
+    </div>
+
+    <!-- Kategori Seçimi -->
+    <div id="categoryBox" class="screen" style="display:none;">
+      <h2>📂 Kategori Seçimi</h2>
+      <p id="selectedLevelText">Seviye: A1</p>
+
+      <div class="category-buttons">
+        <button onclick="selectCategory('Ev')">🏠 Ev</button>
+        <button onclick="selectCategory('İş')">💼 İş</button>
+        <button onclick="selectCategory('Okul')">🏫 Okul</button>
+        <button onclick="selectCategory('Market')">🛒 Market</button>
+        <button onclick="selectCategory('Hastane')">🏥 Hastane</button>
+        <button onclick="selectCategory('Aile')">👨‍👩‍👧 Aile</button>
+      </div>
+
+      <button onclick="showLevelScreen()">↩ Önceki</button>
+      <button onclick="goHome()">🏠 Ana Sayfa</button>
+    </div>
+
+    <!-- Kelime Kartı -->
+    <div id="cardBox" class="screen" style="display:none;">
+
+      <div id="studyPanel">
+        <p id="studyInfo">A1 | Kategori</p>
+        <h3>⏱ <span id="timer">00:00</span></h3>
+
+        <button onclick="pauseStudy()">⏸ Duraklat</button>
+        <button onclick="finishStudy()">■ Bitir</button>
+        <button onclick="showCategoryScreen()">↩ Önceki</button>
+        <button onclick="goHome()">🏠 Ana Sayfa</button>
+      </div>
+
+      <div class="card" onclick="flipCard()">
+        <div class="card-inner" id="cardInner">
+          <div class="card-front">
+            <h2 id="word">🇩🇪 Haus</h2>
+            <p>Kartı çevirmek için tıkla</p>
+          </div>
+
+          <div class="card-back">
+            <h3 id="meaning">🇹🇷 Ev</h3>
+            <p id="sentence">Das Haus ist groß.</p>
+            <p id="translation">Ev büyüktür.</p>
+          </div>
         </div>
       </div>
+
+      <div class="buttons">
+        <button onclick="markKnown()">✅ Biliyorum</button>
+        <button onclick="markUnknown()">❌ Bilmiyorum</button>
+        <button onclick="nextCard()">➡ Sonraki Kart</button>
+      </div>
+
+      <p id="score">Bilinen: 0 | Bilinmeyen: 0</p>
     </div>
 
-    <div class="buttons">
-      <button onclick="markKnown()">Biliyorum</button>
-      <button onclick="markUnknown()">Bilmiyorum</button>
-      <button onclick="nextCard()">Sonraki Kart</button>
+    <!-- Sonuç Ekranı -->
+    <div id="resultBox" class="screen" style="display:none;">
+      <h2>📊 Sonuç Ekranı</h2>
+
+      <p id="resultText"></p>
+
+      <button onclick="showCategoryScreen()">📂 Kategoriye Dön</button>
+      <button onclick="goHome()">🏠 Ana Sayfa</button>
     </div>
 
-    <p id="score">Bilinen: 0 | Bilinmeyen: 0</p>
+    <!-- Ayarlar -->
+    <div id="settingsBox" class="screen" style="display:none;">
+      <h2>⚙️ Ayarlar</h2>
+
+      <p>🇩🇪 Almanca kelimeler ve 🇹🇷 Türkçe anlamlar bayraklarla gösterilir.</p>
+
+      <button onclick="goHome()">🏠 Ana Sayfa</button>
+    </div>
+
   </div>
+
 </div>
 
 <script type="module" src="script.js"></script>
