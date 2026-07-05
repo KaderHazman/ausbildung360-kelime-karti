@@ -1,0 +1,38 @@
+<input type="file" id="excelFile" accept=".xlsx">
+<button id="uploadBtn">Firestore'a Aktar</button>
+
+<script type="module">
+import { db } from "./firebase.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/+esm";
+
+document.getElementById("uploadBtn").onclick = async () => {
+  const file = document.getElementById("excelFile").files[0];
+  if (!file) {
+    alert("Önce Excel dosyası seç");
+    return;
+  }
+
+  const data = await file.arrayBuffer();
+  const workbook = XLSX.read(data);
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet);
+
+  for (const row of rows) {
+    await addDoc(collection(db, "words"), {
+      artikel: row.artikel || "",
+      kelime: row.kelime || "",
+      anlam: row.anlam || "",
+      cumle: row.cumle || "",
+      ceviri: row.ceviri || "",
+      kategori: row.kategori || "",
+      seviye: row.seviye || "A1",
+      dogruSayisi: 0,
+      yanlisSayisi: 0,
+      favori: false
+    });
+  }
+
+  alert(rows.length + " kelime Firestore'a aktarıldı.");
+};
+</script>
