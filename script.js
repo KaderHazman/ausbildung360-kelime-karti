@@ -63,4 +63,3 @@ function updateScore() {
 }
 
 showCard();
-console.log("Test");
