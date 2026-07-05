@@ -1,3 +1,11 @@
+import { auth } from "./firebase.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 const cards = [
   {
     word: "Haus",
@@ -23,6 +31,48 @@ let currentIndex = 0;
 let known = 0;
 let unknown = 0;
 
+window.register = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      document.getElementById("authMessage").textContent = "Kayıt başarılı.";
+    })
+    .catch((error) => {
+      document.getElementById("authMessage").textContent = error.message;
+    });
+};
+
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      document.getElementById("authMessage").textContent = "Giriş başarılı.";
+    })
+    .catch((error) => {
+      document.getElementById("authMessage").textContent = error.message;
+    });
+};
+
+window.logout = function () {
+  signOut(auth);
+};
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("authBox").style.display = "none";
+    document.getElementById("appBox").style.display = "block";
+    document.getElementById("userInfo").textContent = "Giriş yapan: " + user.email;
+    showCard();
+  } else {
+    document.getElementById("authBox").style.display = "block";
+    document.getElementById("appBox").style.display = "none";
+  }
+});
+
 function showCard() {
   document.getElementById("word").textContent = cards[currentIndex].word;
   document.getElementById("meaning").textContent = cards[currentIndex].meaning;
@@ -30,11 +80,11 @@ function showCard() {
   document.getElementById("translation").textContent = cards[currentIndex].translation;
 }
 
-function flipCard() {
+window.flipCard = function () {
   document.getElementById("cardInner").classList.toggle("flipped");
-}
+};
 
-function nextCard() {
+window.nextCard = function () {
   currentIndex++;
 
   if (currentIndex >= cards.length) {
@@ -43,23 +93,22 @@ function nextCard() {
 
   document.getElementById("cardInner").classList.remove("flipped");
   showCard();
-}
+};
 
-function markKnown() {
+window.markKnown = function () {
   known++;
   updateScore();
-  nextCard();
-}
+  window.nextCard();
+};
 
-function markUnknown() {
+window.markUnknown = function () {
   unknown++;
   updateScore();
-  nextCard();
-}
+  window.nextCard();
+};
 
 function updateScore() {
   document.getElementById("score").textContent =
     "Bilinen: " + known + " | Bilinmeyen: " + unknown;
 }
-
-showCard();
+// TEST

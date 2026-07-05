@@ -11,32 +11,43 @@
   <h1>Ausbildung360</h1>
   <p class="subtitle">Almanca Kelime Kartı</p>
 
-  <div class="card" onclick="flipCard()">
-    <div class="card-inner" id="cardInner">
+  <div id="authBox">
+    <input type="email" id="email" placeholder="E-posta">
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="register()">Kayıt Ol</button>
+    <button onclick="login()">Giriş Yap</button>
+    <p id="authMessage"></p>
+  </div>
 
-      <div class="card-front">
-        <h2 id="word">Haus</h2>
-        <p>Kartı çevirmek için tıkla</p>
+  <div id="appBox" style="display:none;">
+    <p id="userInfo"></p>
+    <button onclick="logout()">Çıkış Yap</button>
+
+    <div class="card" onclick="flipCard()">
+      <div class="card-inner" id="cardInner">
+        <div class="card-front">
+          <h2 id="word">Haus</h2>
+          <p>Kartı çevirmek için tıkla</p>
+        </div>
+
+        <div class="card-back">
+          <h3 id="meaning">Ev</h3>
+          <p id="sentence">Das Haus ist groß.</p>
+          <p id="translation">Ev büyüktür.</p>
+        </div>
       </div>
-
-      <div class="card-back">
-        <h3 id="meaning">Ev</h3>
-        <p id="sentence">Das Haus ist groß.</p>
-        <p id="translation">Ev büyüktür.</p>
-      </div>
-
     </div>
-  </div>
 
-  <div class="buttons">
-    <button onclick="markKnown()">Biliyorum</button>
-    <button onclick="markUnknown()">Bilmiyorum</button>
-    <button onclick="nextCard()">Sonraki Kart</button>
-  </div>
+    <div class="buttons">
+      <button onclick="markKnown()">Biliyorum</button>
+      <button onclick="markUnknown()">Bilmiyorum</button>
+      <button onclick="nextCard()">Sonraki Kart</button>
+    </div>
 
-  <p id="score">Bilinen: 0 | Bilinmeyen: 0</p>
+    <p id="score">Bilinen: 0 | Bilinmeyen: 0</p>
+  </div>
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
